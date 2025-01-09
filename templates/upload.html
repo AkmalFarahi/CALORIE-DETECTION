@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Food Calorie Estimation App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7; /* Light gray background */
+            color: #333; /* Dark text for readability */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #1ABC9C; /* Accent color */
+            margin-bottom: 30px;
+        }
+
+        h2, h3 {
+            font-size: 24px;
+            color: #1ABC9C;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        input[type="file"] {
+            font-size: 16px;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button, a.button-link {
+            background-color: #008B8B; /* Pink button */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 16px;
+        }
+
+        button:hover, a.button-link:hover {
+            background-color: #008B8B;
+            transform: scale(1.05);
+        }
+
+        .section-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px; /* Create space between photo and detected items */
+            margin-top: 40px;
+        }
+
+        #uploaded-picture {
+            max-width: 400px; /* Set a fixed max width for the uploaded image */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #detected-items-container {
+            max-width: 500px; /* Adjust width of detected items container */
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between detected items */
+        }
+
+        #detected-items {
+            margin-bottom: 20px;
+        }
+
+        .item-input label {
+        font-size: 18px;
+        color: #444;
+        flex: 1; /* Make label take available space */
+        margin-right: 10px; /* Space between label and input */
+    }
+
+
+    .item-input input {
+        width: 80px; /* Set fixed width for inputs */
+        padding: 5px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+        .item-input a {
+            color: #FF0000;
+            text-decoration: none;
+        }
+
+        .item-input a:hover {
+            text-decoration: underline;
+        }
+
+        .total-calories-container {
+            margin-top: 20px;
+        }
+
+        #healthy-advice p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        #result-image-container {
+            text-align: center;
+        }
+
+        #summary-section {
+            background-color: #666;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        #view-summary {
+            background-color: #008080; /* Teal for summary button */
+            font-size: 16px;
+            padding: 10px 25px;
+            border-radius: 25px;
+            color:white;
+            ;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #view-summary:hover {
+            background-color: #20B2AA;
+        }
+
+        .button-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #008B8B;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button-container a:hover {
+            background-color: #16A085;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #f7fff7; /* Slightly off-white for readability */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Food Photo</h1>
+    
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".png,.jpg,.jpeg" id="file-input">
+        <button type="submit">Upload and Detect</button>
+    </form>
+
+    <div class="section-container" id="picture-section" style="display:none;">
+        <div id="uploaded-picture-container">
+            <h3>Uploaded Picture</h3>
+            <img id="uploaded-picture" src="#" alt="Uploaded Picture">
+        </div>
+        
+        <div id="detected-items-container">
+            <h3>Detected Items</h3>
+            <div id="detected-items"></div>
+            <div class="total-calories-container">
+                <h3>Total Calories: <span id="total-calories"></span></h3>
+                <button id="recalculate">Recalculate Calories</button>
+            </div>
+            <div id="healthy-advice">
+                <h3>Healthy Eating Advice</h3>
+                <div id="advice-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results" style="display:none;">
+        <button id="view-summary">View Summary</button>
+        <div id="summary-section" style="display: none;">
+            <h2>Summary</h2>
+            <div id="summary-details"></div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#upload-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/upload',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#uploaded-picture').attr('src', '/results/' + data.result_image);
+                        $('#detected-items').empty();
+                        $('#advice-list').empty();
+                        data.detected_items.forEach(function(item) {
+                            $('#detected-items').append(
+                                '<div class="item-input">' +
+                                '<label>' + item.name + ' (' + item.calories + ' kcal/100g): </label>' +
+                                '<input type="number" name="' + item.name + '" value="100" min="0"> g' +
+                                '<br>' +
+                                '<a href="/nutrition/' + item.name.toLowerCase() + '" class="item-link">' + item.name + '</a>' +
+                                '</div>'
+                            );
+                        });
+                        $('#total-calories').text(data.total_calories);
+                        $('#results').show();
+                        $('#picture-section').show();
+
+                        // Get Healthy Eating Advice
+                        getHealthyEatingAdvice(data.detected_items);
+                    }
+                });
+            });
+
+            $('#recalculate').on('click', function() {
+                var items = [];
+                $('.item-input').each(function() {
+                    items.push({
+                        name: $(this).find('label').text().split(' (')[0],
+                        grams: parseFloat($(this).find('input').val())
+                    });
+                });
+                $.ajax({
+                    url: '/recalculate',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(items),
+                    success: function(data) {
+                        $('#total-calories').text(data.total_calories);
+                    }
+                });
+            });
+
+            // View Summary Logic
+            $('#view-summary').on('click', function() {
+                var items = [];
+                $('.item-input').each(function() {
+                    items.push({
+                        name: $(this).find('label').text().split(' (')[0],
+                        grams: parseFloat($(this).find('input').val())
+                    });
+                });
+                $.ajax({
+                    url: '/summary',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(items),
+                    success: function(data) {
+                        $('#summary-details').empty();
+                        $('#summary-details').append('<h3>Total Calories: ' + data.total_calories + ' kcal</h3>');
+                        data.items_with_advice.forEach(function(item) {
+                            $('#summary-details').append(
+                                '<div>' +
+                                '<p><strong>' + item.name + '</strong> (' + item.grams + ' g, ' + item.calories + ' kcal):</p>' +
+                                '<p>Advice: ' + item.advice + '</p>' +
+                                '</div>'
+                            );
+                        });
+                        $('#summary-section').show();
+                    }
+                });
+            });
+
+            // Healthy Eating Advice Logic
+            function getHealthyEatingAdvice(detectedItems) {
+                $.ajax({
+                    url: '/healthy_eating_advice',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(detectedItems),
+                    success: function(data) {
+                        $('#advice-list').empty();
+                        data.healthy_eating_advice.forEach(function(advice) {
+                            $('#advice-list').append('<p><strong>' + advice.name + ':</strong> ' + advice.advice + '</p>');
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+
+<center>
+    <div class="button-container">
+        <a href="/">Go Back to Home</a>
+    </div>
+</center>
+
+</body>
+</html>

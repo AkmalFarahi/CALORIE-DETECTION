@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #66CDAA; /* Medium Aquamarine */
+            font-family: 'Arial', sans-serif;
+            color: #fff; /* White text for contrast */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px #4e9c81; /* Subtle shadow for text */
+            margin-top: 20px;
+        }
+
+        .main {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 400px;
+            background-color: #48C9B0; /* A slightly darker green */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+        }
+
+        label {
+            font-weight: bold;
+            color: #f7fff7; /* Slightly off-white for labels */
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1ABC9C; /* A vibrant green */
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #16A085; /* Darker green on hover */
+            transform: scale(1.05);
+        }
+
+        .button-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #008B8B;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button-container a:hover {
+            background-color: #16A085;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #f7fff7; /* Slightly off-white for readability */
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>BMI Calculator</h1>
+    </center>
+
+    <div class="main">
+        <center>
+            <form class="pure-form" method="POST" action="/bmi_calc">
+                <label for="weight">Weight in (kg):</label><br>
+                <input type="text" name="weight" id="weight" required><br><br>
+
+                <label for="height">Height in (cm):</label><br>
+                <input type="text" name="height" id="height" required><br><br>
+
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </form>
+        </center>
+    </div>
+
+    <br>
+
+    <center><div class="main">
+        {% if bmi %}
+        <h2>{{ bmi }}</h2>  <!-- Display formatted BMI -->
+        <p>BMI Classification: {{ bmi_classification }}</p>
+        <p>Weight Classification: {{ weight_classification }}</p>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    </div>
+    </center>
+
+    
+    
+    
+
+    <center>
+        <div class="button-container">
+            <a href="/">Go Back to Home</a>
+        </div>
+    </center>
+</body>
+
+</html>

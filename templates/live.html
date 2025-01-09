@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Calorie Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 960px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .video-frame {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .button-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #008B8B;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button-container a:hover {
+            background-color: #16A085;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #f7fff7; /* Slightly off-white for readability */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Calorie Detection</h1>
+    <div class="container">
+        <img src="{{ url_for('video_feed') }}" alt="Live Feed" class="video-frame">
+        <div class="footer">
+            <p>Powered by <a href="https://github.com/ultralytics/yolov8" target="_blank" rel="noopener noreferrer">YOLOv8</a> & Flask</p>
+        </div>
+    </div>
+
+    <center>
+        <div class="button-container">
+            <a href="/">Go Back to Home</a>
+        </div>
+    </center>
+</body>
+</html>

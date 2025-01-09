@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item }} - Nutritional Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #00796b;
+            text-align: center;
+        }
+        .nutrition-info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: black;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .nutrition-info h2 {
+            color: #00796b;
+        }
+        .nutrition-info p {
+            font-size: 1.2em;
+        }
+
+        .button-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            background-color: #008B8B;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button-container a:hover {
+            background-color: #16A085;
+            transform: scale(1.05);
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #f7fff7; /* Slightly off-white for readability */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ item }} - Nutritional Information</h1>
+    <div class="nutrition-info">
+        <h2>Details</h2>
+        <p><strong>Calories:</strong> {{ info.calories }} kcal</p>
+        <p><strong>Protein:</strong> {{ info.protein }} g</p>
+        <p><strong>Fat:</strong> {{ info.fat }} g</p>
+        <p><strong>Carbohydrates:</strong> {{ info.carbs }} g</p>
+    </div>
+
+    <center>
+        <div class="button-container">
+            <a href="/">Go Back to Home</a>
+        </div>
+    </center>
+</body>
+</html>
